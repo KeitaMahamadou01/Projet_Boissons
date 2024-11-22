@@ -129,8 +129,8 @@ $Sql="
                                         nom_utilisateur VARCHAR(100) PRIMARY KEY,
                                         mot_de_passe VARCHAR(255) NOT NULL); 
         CREATE TABLE panier (   id INT AUTO_INCREMENT PRIMARY KEY,   
-                                utilisateur_id INT NOT NULL, 
-                                nom_recette INT NOT NULL, 
+                                utilisateur_id VARCHAR(100) NOT NULL, 
+                                nom_recette VARCHAR(500) NOT NULL, 
                                 date_ajout TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Date et heure d'ajout
                                 FOREIGN KEY (utilisateur_id) REFERENCES authentification(nom_utilisateur) ON DELETE CASCADE,
                                 FOREIGN KEY (nom_recette) REFERENCES recette(titre) ON DELETE CASCADE );          
