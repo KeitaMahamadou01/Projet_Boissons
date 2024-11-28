@@ -1,6 +1,11 @@
 <?php
+// Connexion à la base de données
+$mysqli=mysqli_connect('127.0.0.1', 'root', '',"Boissons") or die("Erreur de connexion");
 
 
+if ($mysqli->connect_error) {
+    die("Erreur de connexion : " . $mysqli->connect_error);
+}
 function infoRecette($mysqli,$row){
     echo "<div class='recette'>";
 
@@ -39,9 +44,11 @@ function infoRecette($mysqli,$row){
 
     echo "</div><hr>";
 }
-function superCategorie($mysqli,$row)
+function superCategorie($nom)
 {
-    $sqlsupercategorie = "SELECT * FROM super_categ WHERE nom_hierarchie = '" . $mysqli->real_escape_string($row['nom']) . "'";
+    global $mysqli;
+    $sqlsupercategorie = "SELECT * FROM super_categ WHERE nom_hierarchie = '" . $mysqli->real_escape_string($nom) . "'";
+    
     $superCateg = $mysqli->query($sqlsupercategorie);
     if ($superCateg->num_rows > 0) {
         echo "<p><strong>Super catégorie :</strong> ";
@@ -51,11 +58,13 @@ function superCategorie($mysqli,$row)
         }
         echo implode(", ", $superCategList);
         echo "</p>";
+        return $superCategList;
     }
 
 }
-function sousCategorie($mysqli,$row){
-    $sqlsouscategorie = "SELECT * FROM sous_categ WHERE nom_hierarchie = '" . $mysqli->real_escape_string($row['nom']) . "'";
+function sousCategorie($nomhierarchie){
+    global $mysqli;
+    $sqlsouscategorie = "SELECT * FROM sous_categ WHERE nom_hierarchie = '" . $mysqli->real_escape_string($nomhierarchie) . "'";
     $sousCateg = $mysqli->query($sqlsouscategorie);
     if ($sousCateg->num_rows > 0) {
         echo "<p><strong>Sous catégorie :</strong> ";
@@ -65,6 +74,7 @@ function sousCategorie($mysqli,$row){
         }
         echo implode(", ", $sousCategList);
         echo "</p>";
+        return $sousCategList;
     }
 }
 function panier($mysqli,$nom_utilisateur)
@@ -96,13 +106,7 @@ function ajouterUtilisateur($mysqli,$nom,$prenom,$nom_utilisateur,$mot_de_passe)
     }
     return false;
 }
-// Connexion à la base de données
-$mysqli=mysqli_connect('127.0.0.1', 'root', '',"Boissons") or die("Erreur de connexion");
 
-
-if ($mysqli->connect_error) {
-    die("Erreur de connexion : " . $mysqli->connect_error);
-}
 
 // Requête pour récupérer les recettes
 $sql = "SELECT * FROM recette";
@@ -110,7 +114,7 @@ $recette = $mysqli->query($sql);
 $sql = "SELECT * FROM hierarchie";
 $hierarchie = $mysqli->query($sql);
 
-if ($recette->num_rows > 0) {
+/*if ($recette->num_rows > 0) {
     while ($row = $recette->fetch_assoc()) {
         infoRecette($mysqli,$row);
     }
@@ -130,6 +134,6 @@ if ($hierarchie->num_rows > 0) {
     }
 } else {
     echo "Aucune recette trouvée.";
-}
-$mysqli->close();
+}*/
+//$mysqli->close();
 ?>
