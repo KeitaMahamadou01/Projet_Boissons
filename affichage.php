@@ -91,17 +91,36 @@ function panier($mysqli,$nom_utilisateur)
         echo "</p>";
     }
 }
-function authentification($mysqli,$nom_utilisateur,$mot_de_passe){
-    $sqlAuthent="SELECT * FROM authentification WHERE utilisateur_id='" . $mysqli->real_escape_string($nom_utilisateur) . "' and mot_de_passe='" . $mysqli->real_escape_string($mot_de_passe) . "'";
+function authentification($nom_utilisateur,$mot_de_passe){
+    global $mysqli;
+    $sqlAuthent="SELECT * FROM authentification WHERE nom_utilisateur='" . $mysqli->real_escape_string($nom_utilisateur) . "' and mot_de_passe='" . $mysqli->real_escape_string($mot_de_passe) . "'";
     $auth = $mysqli->query($sqlAuthent);
     if ($auth->num_rows > 0) {
         return true;
     }
     return false;
 }
-function ajouterUtilisateur($mysqli,$nom,$prenom,$nom_utilisateur,$mot_de_passe){
-    $SqladdUser="INSERT INTO authentification VALUES('".mysqli_real_escape_string($nom)."','".mysqli_real_escape_string($prenom)."','".mysqli_real_escape_string($nom_utilisateur)."','".mysqli_real_escape_string($mot_de_passe)."')";
+function ajouterUtilisateur($nom,$prenom,$nom_utilisateur,$mot_de_passe,$email,$num_telephone,$adresse,$dateNaissance,$sexe){
+    global $mysqli;
+    $SqladdUser="INSERT INTO authentification VALUES('".$mysqli->real_escape_string($nom).
+                                                    "','".$mysqli->real_escape_string($prenom).
+                                                    "','".$mysqli->real_escape_string($nom_utilisateur).
+                                                    "','".$mysqli->real_escape_string($mot_de_passe).
+                                                    "','".$mysqli->real_escape_string($email).
+                                                    "','".$mysqli->real_escape_string($num_telephone).
+                                                    "','". $mysqli->real_escape_string($adresse) .
+                                                    "','". $mysqli->real_escape_string($dateNaissance) .
+                                                    "','". $mysqli->real_escape_string($sexe) . "')";
     if($mysqli->query($SqladdUser)){
+        return true;
+    }
+    return false;
+}
+function nomUtilisateurExist($nom_utilisateur){
+    global $mysqli;
+    $sqlAuthent="SELECT * FROM authentification WHERE nom_utilisateur='" . $mysqli->real_escape_string($nom_utilisateur) . "'";
+    $auth = $mysqli->query($sqlAuthent);
+    if ($auth->num_rows > 0) {
         return true;
     }
     return false;
