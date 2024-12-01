@@ -6,43 +6,80 @@ $mysqli=mysqli_connect('127.0.0.1', 'root', '',"Boissons") or die("Erreur de con
 if ($mysqli->connect_error) {
     die("Erreur de connexion : " . $mysqli->connect_error);
 }
-function infoRecette($mysqli,$row){
-    echo "<div class='recette'>";
+function recettesFromIngredient($ingredient) {
+    global $mysqli; // Utilisation de la connexion MySQLi globale
+
+
+    // Requête pour récupérer les titres des recettes contenant l'ingrédient
+    $requete = "SELECT DISTINCT r.titre
+        FROM recette r
+        INNER JOIN ingredient i ON r.titre = i.nom_recette
+        WHERE i.nom_ingredient = '" . $mysqli->real_escape_string($ingredient) . "'";
+
+    // Exécuter la requête
+    $resultat = mysqli_query($mysqli, $requete);
+
+    if (!$resultat) {
+        // Gérer les erreurs SQL
+        echo "Erreur SQL : " . mysqli_error($mysqli) . "<br>";
+        return [];
+    }
+
+    // Récupérer les titres dans un tableau
+    $titres = [];
+    while ($ligne = mysqli_fetch_assoc($resultat)) {
+        $titres[] = $ligne['titre'];
+    }
+
+    // Libérer les ressources
+    mysqli_free_result($resultat);
+
+    return $titres;
+}
+
+
+function infoRecette($titre){
+    global $mysqli;
+    //echo "<div class='recette'>";
 
     // Afficher le titre
-    echo "<p><strong>Titre :</strong> " . htmlspecialchars($row['titre']) . "</p>";
+    echo "<p><strong>" . htmlspecialchars($titre) . "</strong></p>";
+
+    // Afficher l'image si elle existe
+    $sqlTitre = "SELECT * FROM photo WHERE nom_recette = '" . $mysqli->real_escape_string($titre) . "'";
+    $photo = $mysqli->query($sqlTitre);
+    if ($photo->num_rows > 0) {
+        while ($photo1 = $photo->fetch_assoc()) {
+            echo "<p><img src='" . htmlspecialchars($photo1["chemin_photo"]) . "' alt='" . htmlspecialchars($titre) . "' style='max-width: 300px;'></p>";
+        }
+    }
 
     // Afficher les ingrédients
-    $sqlIngredient = "SELECT * FROM ingredient WHERE nom_recette = '" . $mysqli->real_escape_string($row['titre']) . "'";
+    $sqlIngredient = "SELECT * FROM ingredient WHERE nom_recette = '" . $mysqli->real_escape_string($titre) . "'";
     $ingredient = $mysqli->query($sqlIngredient);
-    $sql = "SELECT * FROM photo WHERE nom_recette = '" . $mysqli->real_escape_string($row['titre']) . "'";
-    $photo = $mysqli->query($sql);
 
     if ($ingredient->num_rows > 0) {
-        echo "<p><strong>Une liste d'ingrédients :</strong> ";
+        echo "<p><strong>Ingrédients :</strong><br>";
         $ingredientsList = [];
         while ($ingredient1 = $ingredient->fetch_assoc()) {
             $ingredientsList[] = htmlspecialchars($ingredient1['nom_ingredient']);
         }
-        echo implode(", ", $ingredientsList);
+        echo implode("<br>", $ingredientsList);
         echo "</p>";
     } else {
-        echo "<p><strong>Une liste d'ingrédients :</strong> Aucun ingrédient trouvé</p>";
+        echo "<p>Aucun ingrédient trouvé</p>";
     }
 
     // Afficher la préparation
-    echo "<p><strong>Sa préparation :</strong> " . htmlspecialchars($row['preparation']) . "</p>";
-
-    // Afficher l'image si elle existe
-    if ($photo->num_rows > 0) {
-        while ($photo1 = $photo->fetch_assoc()) {
-            echo "<p><strong>Une image :</strong> <img src='" . htmlspecialchars($photo1["chemin_photo"]) . "' alt='" . htmlspecialchars($row['titre']) . "' style='max-width: 300px;'></p>";
+    $sqlPreparation = "SELECT * FROM recette WHERE titre = '" . $mysqli->real_escape_string($titre) . "'";
+    $preparation = $mysqli->query($sqlPreparation);
+    if($preparation->num_rows > 0){
+        while($p = $preparation->fetch_assoc()){
+            echo "<p><strong>Préparation :</strong><br>" . htmlspecialchars($p['preparation']) . "</p>";
         }
-    } else {
-        echo "<p><strong>Une image :</strong> Aucune image disponible</p>";
     }
 
-    echo "</div><hr>";
+    //echo "</div><hr>";
 }
 function superCategorie($nom)
 {
@@ -67,13 +104,10 @@ function sousCategorie($nomhierarchie){
     $sqlsouscategorie = "SELECT * FROM sous_categ WHERE nom_hierarchie = '" . $mysqli->real_escape_string($nomhierarchie) . "'";
     $sousCateg = $mysqli->query($sqlsouscategorie);
     if ($sousCateg->num_rows > 0) {
-        echo "<p><strong>Sous catégorie :</strong> ";
         $sousCategList = [];
         while ($sousCateg1 = $sousCateg->fetch_assoc()) {
             $sousCategList[] = htmlspecialchars($sousCateg1['nom_sous_categ']);
         }
-        echo implode(", ", $sousCategList);
-        echo "</p>";
         return $sousCategList;
     }
 }
@@ -106,34 +140,4 @@ function ajouterUtilisateur($mysqli,$nom,$prenom,$nom_utilisateur,$mot_de_passe)
     }
     return false;
 }
-
-
-// Requête pour récupérer les recettes
-$sql = "SELECT * FROM recette";
-$recette = $mysqli->query($sql);
-$sql = "SELECT * FROM hierarchie";
-$hierarchie = $mysqli->query($sql);
-
-/*if ($recette->num_rows > 0) {
-    while ($row = $recette->fetch_assoc()) {
-        infoRecette($mysqli,$row);
-    }
-} else {
-    echo "Aucune recette trouvée.";
-}
-
-if ($hierarchie->num_rows > 0) {
-    while ($row = $hierarchie->fetch_assoc()) {
-        echo "<div class='Hierarchie'>";
-
-        // Afficher le titre
-        echo "<p><strong>Titre :</strong> " . htmlspecialchars($row['nom']) . "</p>";
-        sousCategorie($mysqli,$row);
-        superCategorie($mysqli,$row);
-        echo "</div><hr>";
-    }
-} else {
-    echo "Aucune recette trouvée.";
-}*/
-//$mysqli->close();
 ?>
