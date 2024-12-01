@@ -1,0 +1,94 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: #f0f4f7;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Aligner vers le haut */
+    height: 100vh;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px; /* Augmenter la largeur maximale du formulaire */
+}
+
+h2 {
+    text-align: center;
+    color: #4CAF50;
+    margin-bottom: 30px;
+}
+
+label {
+    font-size: 14px;
+    color: #333;
+}
+
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="radio"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input[type="radio"] {
+    width: auto;
+    margin-right: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.success-message {
+    color: green;
+    text-align: center;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+p {
+    text-align: center;
+}
+
+p a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+p a:hover {
+    text-decoration: underline;
+}

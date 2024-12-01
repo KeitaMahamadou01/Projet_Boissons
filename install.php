@@ -127,7 +127,12 @@ $Sql="
 		CREATE TABLE authentification ( nom VARCHAR(100) NOT NULL,
                                         prenom VARCHAR(100) NOT NULL,
                                         nom_utilisateur VARCHAR(100) PRIMARY KEY,
-                                        mot_de_passe VARCHAR(255) NOT NULL); 
+                                        mot_de_passe VARCHAR(255) NOT NULL,
+                                        adresse_mail VARCHAR(255) NOT NULL,
+                                        num_telephone VARCHAR(255) NOT NULL,
+                                        adresse VARCHAR(500) ,
+                                        dateNaissance DATE,
+                                        sexe varchar(1)); 
         CREATE TABLE panier (   id INT AUTO_INCREMENT PRIMARY KEY,   
                                 utilisateur_id VARCHAR(100) NOT NULL, 
                                 nom_recette VARCHAR(500) NOT NULL, 
