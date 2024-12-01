@@ -1,3 +1,18 @@
+.container {
+    display: flex; /* Dispose les enfants horizontalement */
+    align-items: flex-start; /* Aligne les enfants en haut */
+    gap: 20px; /* Espace entre le <select> et les recettes */
+}
+
+.recettes-container {
+    flex-grow: 1; /* Prend tout l'espace disponible */
+}
+
+.recettes-container strong {
+    display: block; /* S'assure que le texte occupe toute la largeur */
+    margin-bottom: 10px; /* Ajoute un espace entre le titre et les recettes */
+}
+
 .recettes {
     display: flex;
     flex-wrap: wrap;
@@ -10,12 +25,17 @@
     padding: 10px;
     width: 200px;
     text-align: center;
-    background-color: #f9f9f9;
 }
 
 .recette img {
     width: 100%;
-    height: auto;
     border-radius: 15px;
 }
 
+.select {
+    width: 200px; /* Définissez une largeur fixe */
+    height: 230px; /* Définissez une hauteur fixe */
+    overflow: auto; /* Ajoutez un défilement si le contenu dépasse */
+    box-sizing: border-box; /* Inclut les bordures dans la largeur/hauteur */
+    font-size: 14px; /* Taille de police constante */
+}

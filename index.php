@@ -33,6 +33,7 @@
             echo "<br>";
         }
     ?>
+    <div class='container'>
     <form method="POST" action="">
         <select name="Aliments" size="10" onchange="this.form.submit()" class="select">
             <option value="retour"><-</option>
@@ -56,6 +57,7 @@
             ?>
         </select>
     </form>
+    <div class="recettes-container">
     <?php
         if(isset($ingredient)){
             $recettes = recettesFromIngredient($ingredient);
@@ -71,5 +73,7 @@
             }
         }
     ?>
+    </div>
+    </div>
 </body>
 </html>
