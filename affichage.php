@@ -37,6 +37,35 @@ function recettesFromIngredient($ingredient) {
     return $titres;
 }
 
+function allRecettes() {
+    global $mysqli; // Utilisation de la connexion MySQLi globale
+
+
+    // Requête pour récupérer les titres des recettes contenant l'ingrédient
+    $requete = "SELECT DISTINCT r.titre
+        FROM recette r";
+
+    // Exécuter la requête
+    $resultat = mysqli_query($mysqli, $requete);
+
+    if (!$resultat) {
+        // Gérer les erreurs SQL
+        echo "Erreur SQL : " . mysqli_error($mysqli) . "<br>";
+        return [];
+    }
+
+    // Récupérer les titres dans un tableau
+    $titres = [];
+    while ($ligne = mysqli_fetch_assoc($resultat)) {
+        $titres[] = $ligne['titre'];
+    }
+
+    // Libérer les ressources
+    mysqli_free_result($resultat);
+
+    return $titres;
+}
+
 
 function infoRecette($titre){
     global $mysqli;
@@ -58,7 +87,7 @@ function infoRecette($titre){
     $ingredient = $mysqli->query($sqlIngredient);
 
     if ($ingredient->num_rows > 0) {
-        echo "<p><strong>Ingrédients :</strong><br>";
+        echo "<p><strong>Ingrédients :</strong>";
         $ingredientsList = [];
         while ($ingredient1 = $ingredient->fetch_assoc()) {
             $ingredientsList[] = htmlspecialchars($ingredient1['nom_ingredient']);
@@ -74,7 +103,7 @@ function infoRecette($titre){
     $preparation = $mysqli->query($sqlPreparation);
     if($preparation->num_rows > 0){
         while($p = $preparation->fetch_assoc()){
-            echo "<p><strong>Préparation :</strong><br>" . htmlspecialchars($p['preparation']) . "</p>";
+            echo "<p><strong>Préparation :</strong>" . htmlspecialchars($p['preparation']) . "</p>";
         }
     }
 
