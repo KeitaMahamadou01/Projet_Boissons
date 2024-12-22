@@ -11,30 +11,40 @@ function recettesFromIngredient($ingredient) {
 
 
     // Requête pour récupérer les titres des recettes contenant l'ingrédient
-    $requete = "SELECT DISTINCT r.titre
+        $requete = "SELECT DISTINCT r.titre
         FROM recette r
         INNER JOIN ingredient i ON r.titre = i.nom_recette
-        WHERE i.nom_ingredient = '" . $mysqli->real_escape_string($ingredient) . "'";
+        WHERE i.nom_ingredient = '" . $ingredient . "'";
 
-    // Exécuter la requête
-    $resultat = mysqli_query($mysqli, $requete);
+        // Exécuter la requête
+        $resultat = mysqli_query($mysqli, $requete);
 
-    if (!$resultat) {
-        // Gérer les erreurs SQL
-        echo "Erreur SQL : " . mysqli_error($mysqli) . "<br>";
-        return [];
+        if (!$resultat) {
+            // Gérer les erreurs SQL
+            echo "Erreur SQL : " . mysqli_error($mysqli) . "<br>";
+            return [];
+        }
+
+        // Récupérer les titres dans un tableau
+        $titres = [];
+        while ($ligne = mysqli_fetch_assoc($resultat)) {
+            $titres[] = $ligne['titre'];
+        }
+
+        // Libérer les ressources
+        mysqli_free_result($resultat);
+
+
+    $souscategs=sousCategorie($ingredient);
+    if(!empty($souscategs)) {
+
+        foreach ($souscategs as $souscateg) {
+            $titres=array_merge($titres,recettesFromIngredient($souscateg));
+        }
     }
-
-    // Récupérer les titres dans un tableau
-    $titres = [];
-    while ($ligne = mysqli_fetch_assoc($resultat)) {
-        $titres[] = $ligne['titre'];
-    }
-
-    // Libérer les ressources
-    mysqli_free_result($resultat);
-
+    $titres = array_unique($titres);
     return $titres;
+
 }
 
 function allRecettes() {
@@ -80,6 +90,8 @@ function infoRecette($titre){
         while ($photo1 = $photo->fetch_assoc()) {
             echo "<p><img src='" . htmlspecialchars($photo1["chemin_photo"]) . "' alt='" . htmlspecialchars($titre) . "' style='max-width: 300px;'></p>";
         }
+    }else{
+        echo "<p><img src='" . htmlspecialchars('image.jpg') . "' alt='" . htmlspecialchars($titre) . "' style='max-width: 300px;'></p>";
     }
 
     // Afficher les ingrédients
@@ -115,16 +127,12 @@ function superCategorie($nom)
     
     $superCateg = $mysqli->query($sqlsupercategorie);
     if ($superCateg->num_rows > 0) {
-        echo "<p><strong>Super catégorie :</strong> ";
         $superCategList = [];
         while ($superCateg1 = $superCateg->fetch_assoc()) {
             $superCategList[] = htmlspecialchars($superCateg1['nom_super_categ']);
         }
-        echo implode(", ", $superCategList);
-        echo "</p>";
         return $superCategList;
     }
-
 }
 function sousCategorie($nomhierarchie){
     global $mysqli;
@@ -161,7 +169,7 @@ function authentification($nom_utilisateur,$mot_de_passe){
     }
     return false;
 }
-function ajouterUtilisateur($nom,$prenom,$nom_utilisateur,$mot_de_passe,$email,$num_telephone,$adresse,$dateNaissance,$sexe){
+function ajouterUtilisateur($nom,$prenom,$nom_utilisateur,$mot_de_passe,$email,$num_telephone,$adresse,$code_postale,$ville,$dateNaissance,$sexe){
     global $mysqli;
     $SqladdUser="INSERT INTO authentification VALUES('".$mysqli->real_escape_string($nom).
                                                     "','".$mysqli->real_escape_string($prenom).
@@ -170,7 +178,9 @@ function ajouterUtilisateur($nom,$prenom,$nom_utilisateur,$mot_de_passe,$email,$
                                                     "','".$mysqli->real_escape_string($email).
                                                     "','".$mysqli->real_escape_string($num_telephone).
                                                     "','". $mysqli->real_escape_string($adresse) .
-                                                    "','". $mysqli->real_escape_string($dateNaissance) .
+                                                    "','".$mysqli->real_escape_string($code_postale).
+                                                    "','". $mysqli->real_escape_string($ville) .
+                                                    "','".$mysqli->real_escape_string($dateNaissance).
                                                     "','". $mysqli->real_escape_string($sexe) . "')";
     if($mysqli->query($SqladdUser)){
         return true;

@@ -71,3 +71,24 @@ p a:hover {
     font-size: 16px;
     margin-top: 10px;
 }
+.password-container input {
+    width: 100%; /* Occupe toute la largeur de son conteneur */
+    padding: 10px; /* Ajoute de l'espace interne */
+    font-size: 16px; /* Taille de la police */
+    border: 1px solid #ccc; /* Bordure */
+    border-radius: 5px; /* Coins arrondis */
+    box-sizing: border-box; /* Inclut le padding et la bordure dans la largeur */
+}
+
+.password-container {
+    display: flex;
+    align-items: center;
+}
+
+.password-container button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 0 5px;
+}

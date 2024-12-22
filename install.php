@@ -124,14 +124,16 @@ $Sql="
 		                            FOREIGN KEY (nom_hierarchie) REFERENCES hierarchie(nom));  
 		CREATE TABLE photo (nom_recette VARCHAR(255),chemin_photo VARCHAR(255),
 		                    FOREIGN KEY (nom_recette) REFERENCES recette(titre));
-		CREATE TABLE authentification ( nom VARCHAR(100) NOT NULL,
-                                        prenom VARCHAR(100) NOT NULL,
+		CREATE TABLE authentification ( nom VARCHAR(100),
+                                        prenom VARCHAR(100),
                                         nom_utilisateur VARCHAR(100) PRIMARY KEY,
                                         mot_de_passe VARCHAR(255) NOT NULL,
-                                        adresse_mail VARCHAR(255) NOT NULL,
-                                        num_telephone VARCHAR(255) NOT NULL,
+                                        adresse_mail VARCHAR(255),
+                                        num_telephone VARCHAR(255),
                                         adresse VARCHAR(500) ,
-                                        dateNaissance DATE,
+                                        code_postale VARCHAR(11) ,
+                                        ville VARCHAR(500) ,
+                                        dateNaissance varchar(12) ,
                                         sexe varchar(1)); 
         CREATE TABLE panier (   id INT AUTO_INCREMENT PRIMARY KEY,   
                                 utilisateur_id VARCHAR(100) NOT NULL, 
