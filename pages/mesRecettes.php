@@ -11,7 +11,13 @@
     require("../données/fonctions.php");
     session_start();
     if(!isset($_SESSION['username'])){
-        echo "<strong>Veuillez d'abord vous connecter pour enregistrer vos recettes préférées</strong>";
+        $recettes = $_SESSION['favorisVisiteur'];
+        if (!empty($_SESSION['favorisVisiteur'])){
+            echo "<strong>Recettes Favories:<br></strong>";
+            affichageRecettes($recettes);
+        }else{
+            echo "<strong>Aucune Recettes Favories</strong>";
+        }
     }else{
         $username = $_SESSION['username'];
         $recettes = recettesFromFavori($username);
