@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Authentification</title>
-    <link rel="stylesheet" href="styleAuthentification.css">
+    <link rel="stylesheet" href="../styles/styleAuthentification.css">
 </head>
 <body>
 <script type="text/javascript">
@@ -51,7 +51,7 @@
                 // Authentification réussie
                 echo "<p class='success-message'>Connexion réussie. Bienvenue, " . htmlspecialchars($username) . ".</p>";
                 // Vous pouvez ici rediriger l'utilisateur ou démarrer une session :
-                // header('Location: tableau_de_bord.php');
+                header('Location: accueil.php');
                 exit;
             }
         }

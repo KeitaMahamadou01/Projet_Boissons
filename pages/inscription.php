@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulaire d'inscription</title>
-    <link rel="stylesheet" href="styleInscription.css">
+    <link rel="stylesheet" href="../styles/styleInscription.css">
 
 </head>
 <body>

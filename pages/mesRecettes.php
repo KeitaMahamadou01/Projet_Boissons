@@ -3,15 +3,12 @@
 
 <head>
     <title>Mes Recettes</title>
-	<meta charset="utf-8" />
-    <link href="style.css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
-    <script src="script.js"></script>
+	<?php include("../données/header.php")?>
 </head>
 
 <body>
 <?php
-    require("affichage.php");
+    require("../données/fonctions.php");
     $recettes = recettesFromFavori("test");
     if (!empty($recettes)){
         echo "<strong>Recettes Favories:<br></strong>";

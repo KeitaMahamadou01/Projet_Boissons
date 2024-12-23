@@ -72,7 +72,7 @@ function insererSuper_categ($conn,$donnees){
     return $sql;
 }
 function insererPhoto($conn,$donnees){
-    $dossier = 'Photos/';
+    $dossier = '../données/Photos/';
     $sql="";
 // Vérifier si le chemin est un dossier valide
     if (is_dir($dossier)) {
