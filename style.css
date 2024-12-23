@@ -1,3 +1,31 @@
+h1 {
+    text-align: center;
+}
+
+.en_tete{
+    text-align: center;
+}
+
+.connexion {
+    float:right;
+    border: 0;
+    padding: 5px 20px;
+    font-size: 1rem;
+    color: white;
+    border-radius: 10px;
+    background-color: black;
+}
+
+.connexion:hover {
+    background-color: rgb(50,50,50);
+}
+
+.connexion:active { 
+    box-shadow:
+      inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+      inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+  }
+
 .container {
     display: flex; /* Dispose les enfants horizontalement */
     align-items: flex-start; /* Aligne les enfants en haut */
@@ -38,4 +66,8 @@
     overflow: auto; /* Ajoutez un défilement si le contenu dépasse */
     box-sizing: border-box; /* Inclut les bordures dans la largeur/hauteur */
     font-size: 14px; /* Taille de police constante */
+}
+
+.favori {
+    border-color: red;
 }

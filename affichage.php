@@ -83,7 +83,7 @@ function infoRecette($titre){
     }
 
     // Afficher les ingrédients
-    $sqlIngredient = "SELECT * FROM ingredient WHERE nom_recette = '" . $mysqli->real_escape_string($titre) . "'";
+    /*$sqlIngredient = "SELECT * FROM ingredient WHERE nom_recette = '" . $mysqli->real_escape_string($titre) . "'";
     $ingredient = $mysqli->query($sqlIngredient);
 
     if ($ingredient->num_rows > 0) {
@@ -105,9 +105,26 @@ function infoRecette($titre){
         while($p = $preparation->fetch_assoc()){
             echo "<p><strong>Préparation :</strong>" . htmlspecialchars($p['preparation']) . "</p>";
         }
-    }
+    }*/
 
 }
+
+function affichageRecettes($recettes){
+    echo "<div class='recettes'>";
+    foreach($recettes as $recette){
+        echo "<div class='recette'>";
+        $recetteJson = htmlspecialchars(json_encode($recette), ENT_QUOTES, 'UTF-8');
+        if(!estFavori($recette,"test")){
+            echo "<button class='nonfavori' onClick='actionFavori($recetteJson,\"test\",true)'><img src='heart-fill.svg' alt='favori'/></button>";
+        }else{
+            echo "<button class='favori' onClick='actionFavori($recetteJson,\"test\",false)'><img src='heart-fill.svg' alt='favori'/></button>";
+        }
+        infoRecette($recette);
+        echo "</div>";
+    }
+    echo "</div>";
+}
+
 function superCategorie($nom)
 {
     global $mysqli;
@@ -187,5 +204,60 @@ function nomUtilisateurExist($nom_utilisateur){
     return false;
 }
 
+
+function ajouterFavori($nomRecette,$nom_utilisateur){
+    global $mysqli;
+    $SqladdFav="INSERT INTO panier (utilisateur_id, nom_recette) VALUES('".$mysqli->real_escape_string($nom_utilisateur).
+                                            "','".$mysqli->real_escape_string($nomRecette). "')";
+    
+    if($mysqli->query($SqladdFav)){
+        return true;
+    }
+    return false;
+}
+function enleverFavori($nomRecette,$nom_utilisateur){
+    global $mysqli;
+    $sqlRmFav = "DELETE FROM panier WHERE utilisateur_id='" . $mysqli->real_escape_string($nom_utilisateur) . "' and nom_recette='" . $mysqli->real_escape_string($nomRecette) . "'";
+    if($mysqli->query($sqlRmFav)){
+        return true;
+    }
+    return false;
+}
+function estFavori($nomRecette,$nom_utilisateur){
+    global $mysqli;
+    $sqlIsFav="SELECT 1 FROM panier WHERE utilisateur_id='" . $mysqli->real_escape_string($nom_utilisateur) . "' and nom_recette='" . $mysqli->real_escape_string($nomRecette) . "'";
+    $fav = $mysqli->query($sqlIsFav);
+    if ($fav->num_rows > 0) {
+        return true;
+    }
+    return false;
+}
+function recettesFromFavori($nom_utilisateur) {
+    global $mysqli; // Utilisation de la connexion MySQLi globale
+
+    // Requête pour récupérer les titres des recettes contenant l'ingrédient
+    $requete = "SELECT DISTINCT nom_recette FROM panier
+        WHERE utilisateur_id='" . $mysqli->real_escape_string($nom_utilisateur) . "'";
+        
+    // Exécuter la requête
+    $resultat = mysqli_query($mysqli, $requete);
+
+    if (!$resultat) {
+        // Gérer les erreurs SQL
+        echo "Erreur SQL : " . mysqli_error($mysqli) . "<br>";
+        return [];
+    }
+
+    // Récupérer les titres dans un tableau
+    $titres = [];
+    while ($ligne = mysqli_fetch_assoc($resultat)) {
+        $titres[] = $ligne['nom_recette'];
+    }
+
+    // Libérer les ressources
+    mysqli_free_result($resultat);
+
+    return $titres;
+}
 
 ?>

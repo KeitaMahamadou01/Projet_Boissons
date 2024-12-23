@@ -5,11 +5,18 @@
     <title>Boissons</title>
 	<meta charset="utf-8" />
     <link href="style.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
+    <script src="script.js"></script>
 </head>
 
 <body>
     <?php require("affichage.php")?>
-    <h1>Recettes</h1>
+    <div class="entete">
+        <h1>Recettes</h1>
+        <div class=en_tete><p><a href="mesRecettes.php">Mes Recettes Préférées<a><p></div>
+        <button class="connexion" type="button" onclick="location.href = 'authentification.php'">Connexion</button>
+    <div>
+    <br>
     <br>
     <?php
         session_start();
@@ -50,9 +57,8 @@
         <select name="Aliments" size="10" onchange="this.form.submit()" class="select">
             <option value="retour"><-</option>
             <?php
-                $aliments = sousCategorie($ingredient); // Appelle la fonction pour obtenir les super-catégories
+                $aliments = sousCategorie($ingredient);
                 foreach ($aliments as $value) {
-                    // Vérifie si cette super-catégorie est sélectionnée
                     $selected = (isset($_POST['Aliments']) && $_POST['Aliments'] == $value) ? 'selected' : '';
                     echo "<option value='" . htmlspecialchars($value) . "' $selected>" . htmlspecialchars($value) . "</option>";
                 }
@@ -65,25 +71,13 @@
             $recettes = allRecettes();
             if (!empty($recettes)){
                 echo "<strong>Toutes les Recettes :</strong>";
-                echo "<div class='recettes'>";
-                foreach($recettes as $recette){
-                    echo "<div class='recette'>";
-                    infoRecette($recette);
-                    echo "</div>";
-                }
-                echo "</div>";
+                affichageRecettes($recettes);
             }
         }else{
             $recettes = recettesFromIngredient($ingredient);
             if (!empty($recettes)){
                 echo "<strong>Recettes avec " . $ingredient ." :</strong>";
-                echo "<div class='recettes'>";
-                foreach($recettes as $recette){
-                    echo "<div class='recette'>";
-                    infoRecette($recette);
-                    echo "</div>";
-                }
-                echo "</div>";
+                affichageRecettes($recettes);
             }
         }
     ?>
