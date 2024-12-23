@@ -7,7 +7,23 @@
     <link rel="stylesheet" href="styleAuthentification.css">
 </head>
 <body>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordField = document.getElementById('password');
+            const type = passwordField.type === 'password' ? 'text' : 'password';
+            passwordField.type = type;
+            this.textContent = type === 'password' ? '👁️' : '🙈';
+        });
 
+        document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
+            const confirmPasswordField = document.getElementById('confirm_password');
+            const type = confirmPasswordField.type === 'password' ? 'text' : 'password';
+            confirmPasswordField.type = type;
+            this.textContent = type === 'password' ? '👁️' : '🙈';
+        });
+    });
+</script>
 <div class="container">
     <h2>Authentification</h2>
 
@@ -55,7 +71,10 @@
         <input type="text" id="username" name="username" value="<?= htmlspecialchars($username) ?>" required><br>
 
         <label for="password">Mot de passe :</label><br>
-        <input type="password" id="password" name="password" required><br>
+        <div class="password-container">
+            <input type="password" id="password" name="password" required><br>
+            <button type="button" id="toggleConfirmPassword" aria-label="Afficher/masquer le mot de passe">👁️</button>
+        </div>
 
         <button type="submit">Se connecter</button>
     </form>
