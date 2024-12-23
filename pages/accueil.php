@@ -3,7 +3,7 @@
 
 <head>
     <title>Boissons</title>
-    <?php include("../données/header.php")?>
+    <?php require("../données/header.php")?>
 </head>
 
 <body>
