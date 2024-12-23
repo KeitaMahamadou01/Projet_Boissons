@@ -13,7 +13,16 @@
                 <a href="mesRecettes.php">Mes Recettes Préférées<a>
             <p>
         </div>
-        <button class="connexion" type="button" onclick="location.href = 'authentification.php'">Connexion</button>
+        <?php
+            session_start();
+            if(!isset($_SESSION['username'])){
+                echo "<button class='connexion' type='button' onclick=\"location.href = 'authentification.php'\">Connexion</button>";
+            }else{
+                $username = $_SESSION['username'];
+                echo "<button class='connexion' type='button' onclick=\"location.href = 'utilisateur.php'\">$username</button>";
+            }
+        ?>
+        
     <div>
 </head>
 <body>

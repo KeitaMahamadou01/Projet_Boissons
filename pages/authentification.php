@@ -28,7 +28,7 @@
     <h2>Authentification</h2>
 
     <?php
-    include 'affichage.php';
+    require("../données/fonctions.php");
 
     // Initialisation des variables
     $username = "";
@@ -49,10 +49,10 @@
                 $errors[] = "Nom d'utilisateur ou mot de passe incorrect.";
             } else {
                 // Authentification réussie
-                echo "<p class='success-message'>Connexion réussie. Bienvenue, " . htmlspecialchars($username) . ".</p>";
-                // Vous pouvez ici rediriger l'utilisateur ou démarrer une session :
+                session_start();
+                $_SESSION['username'] = $username;
                 header('Location: accueil.php');
-                exit;
+                exit();
             }
         }
     }

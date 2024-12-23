@@ -30,7 +30,7 @@
     <h2>Formulaire d'inscription</h2>
 
     <?php
-    include 'affichage.php';
+    require("../données/fonctions.php");
 
     // Initialisation des variables
     $nom = $prenom = $username = $adresse = $code_postal = $ville  = $sexe = $email = $num_telephone = "";

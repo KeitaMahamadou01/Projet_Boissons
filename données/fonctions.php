@@ -126,10 +126,12 @@ function affichageRecettes($recettes){
     foreach($recettes as $recette){
         echo "<div class='recette'>";
         $recetteJson = htmlspecialchars(json_encode($recette), ENT_QUOTES, 'UTF-8');
-        if(!estFavori($recette,"test")){
-            echo "<button class='nonfavori' onClick='actionFavori($recetteJson,\"test\",true)'><img src='../données/heart-fill.svg' alt='favori'/></button>";
+        $username = $_SESSION['username'];
+        $user = htmlspecialchars(json_encode($username), ENT_QUOTES, 'UTF-8');
+        if(!estFavori($recette,$username)){
+            echo "<button class='nonfavori' onClick='actionFavori($recetteJson,$user,true)'><img src='../données/heart-fill.svg' alt='favori'/></button>";
         }else{
-            echo "<button class='favori' onClick='actionFavori($recetteJson,\"test\",false)'><img src='../données/heart-fill.svg' alt='favori'/></button>";
+            echo "<button class='favori' onClick='actionFavori($recetteJson,$user,false)'><img src='../données/heart-fill.svg' alt='favori'/></button>";
         }
         infoRecette($recette);
         echo "</div>";

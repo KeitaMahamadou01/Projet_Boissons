@@ -9,12 +9,18 @@
 <body>
 <?php
     require("../données/fonctions.php");
-    $recettes = recettesFromFavori("test");
-    if (!empty($recettes)){
-        echo "<strong>Recettes Favories:<br></strong>";
-        affichageRecettes($recettes);
+    session_start();
+    if(!isset($_SESSION['username'])){
+        echo "<strong>Veuillez d'abord vous connecter pour enregistrer vos recettes préférées</strong>";
     }else{
-        echo "<strong>Aucune Recettes Favories</strong>";
+        $username = $_SESSION['username'];
+        $recettes = recettesFromFavori($username);
+        if (!empty($recettes)){
+            echo "<strong>Recettes Favories:<br></strong>";
+            affichageRecettes($recettes);
+        }else{
+            echo "<strong>Aucune Recettes Favories</strong>";
+        }
     }
 ?>
 

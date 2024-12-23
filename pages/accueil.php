@@ -11,7 +11,6 @@
     <br>
     <br>
     <?php
-        session_start();
         if(!isset($_SESSION['chemin']) || count($_SESSION['chemin']) == 0){
             $_SESSION['chemin'] = [];
             $_SESSION['chemin'][] = "Aliment";
