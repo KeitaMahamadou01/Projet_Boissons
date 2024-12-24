@@ -8,7 +8,12 @@
 
 <body>
     <?php require("../données/fonctions.php")?>
+
     <br>
+    <form method="POST" action="">
+        <input type="text" name="search" placeholder="Rechercher une recette..." value="<?php echo $search; ?>" />
+        <button type="submit">Rechercher</button>
+    </form>
     <br>
     <?php
         if(!isset($_SESSION['chemin']) || count($_SESSION['chemin']) == 0){
@@ -58,19 +63,35 @@
     </form>
     <div class="recettes-container">
     <?php
-        if($ingredient == 'Aliment'){
+    // Vérification et traitement des données envoyées par le formulaire
+    $search = '';
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $search = isset($_POST['search']) ? htmlspecialchars($_POST['search']) : '';
+        // Vous pouvez ajouter ici un traitement de la recherche
+        // Par exemple, rechercher une recette dans une base de données
+        if($search != '') {
+            echo "<strong>Vous avez recherché : $search</strong>";
+            $recettes = rechercherRecette($search);
+            if (!empty($recettes)) {
+                affichageRecettes($recettes);
+            }else{
+                echo "<strong>Aucune recette ne correspond à votre recherche.</strong>";
+            }
+        }else{
+        if ($ingredient == 'Aliment') {
             $recettes = allRecettes();
-            if (!empty($recettes)){
+            if (!empty($recettes)) {
                 echo "<strong>Toutes les Recettes :</strong>";
                 affichageRecettes($recettes);
             }
-        }else{
+        } else {
             $recettes = recettesFromIngredient($ingredient);
-            if (!empty($recettes)){
-                echo "<strong>Recettes avec " . $ingredient ." :</strong>";
+            if (!empty($recettes)) {
+                echo "<strong>Recettes avec " . $ingredient . " :</strong>";
                 affichageRecettes($recettes);
             }
-        }
+        }}
+    }
     ?>
     </div>
     </div>

@@ -138,7 +138,7 @@ function affichageRecettes($recettes){
         }else{
             $username = "visiteur";
             $user = htmlspecialchars(json_encode($username), ENT_QUOTES, 'UTF-8');
-            if(!in_array($recette,$_SESSION['favorisVisiteur'])){
+            if(isset($_SESSION['favorisVisiteur']) && !in_array($recette,$_SESSION['favorisVisiteur'])){
                 echo "<button class='nonfavori' onClick='actionFavori($recetteJson,$user,true)'><img src='../données/heart-fill.svg' alt='favori'/></button>";
             }else{
                 echo "<button class='favori' onClick='actionFavori($recetteJson,$user,false)'><img src='../données/heart-fill.svg' alt='favori'/></button>";
@@ -275,6 +275,34 @@ function recettesFromFavori($nom_utilisateur) {
     $titres = [];
     while ($ligne = mysqli_fetch_assoc($resultat)) {
         $titres[] = $ligne['nom_recette'];
+    }
+
+    // Libérer les ressources
+    mysqli_free_result($resultat);
+
+    return $titres;
+}
+function rechercherRecette($nomRecette) {
+    global $mysqli;
+
+    // Requête pour récupérer les titres des recettes contenant l'ingrédient
+    $requete = "SELECT DISTINCT r.titre
+        FROM recette r
+        where upper(r.titre) like upper('%" . $mysqli->real_escape_string($nomRecette) . "%')";
+
+    // Exécuter la requête
+    $resultat = mysqli_query($mysqli, $requete);
+
+    if (!$resultat) {
+        // Gérer les erreurs SQL
+        echo "Erreur SQL : " . mysqli_error($mysqli) . "<br>";
+        return [];
+    }
+
+    // Récupérer les titres dans un tableau
+    $titres = [];
+    while ($ligne = mysqli_fetch_assoc($resultat)) {
+        $titres[] = $ligne['titre'];
     }
 
     // Libérer les ressources
