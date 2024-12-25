@@ -71,3 +71,17 @@ h1 {
 .favori {
     border-color: red;
 }
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-container form {
+    flex: 1;
+}
+
+.search-container .greeting {
+    margin-left: 10px;
+    white-space: nowrap;
+}

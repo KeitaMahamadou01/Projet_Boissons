@@ -6,16 +6,38 @@ $mysqli=mysqli_connect('127.0.0.1', 'root', '',"Boissons") or die("Erreur de con
 if ($mysqli->connect_error) {
     die("Erreur de connexion : " . $mysqli->connect_error);
 }
-function recettesFromIngredient($ingredient) {
+function recettesFromIngredient($ingredient,$triAlp,$photo) {
     global $mysqli; // Utilisation de la connexion MySQLi globale
 
 
     // Requête pour récupérer les titres des recettes contenant l'ingrédient
+    $requete=null;
+    if($triAlp==-1){
+        $requete = "SELECT DISTINCT r.titre
+        FROM recette r
+        INNER JOIN ingredient i ON r.titre = i.nom_recette
+        WHERE i.nom_ingredient = '" . $ingredient . "'
+            ORDER BY r.titre DESC";
+    }else if($photo==1){
+        $requete = "SELECT DISTINCT r.titre
+        FROM recette r
+        INNER JOIN ingredient i ON r.titre = i.nom_recette
+        WHERE i.nom_ingredient = '" . $ingredient . "' and r.titre in(SELECT DISTINCT nom_recette
+            FROM photo)";
+
+    }else if($triAlp==-1){
+        $requete = "SELECT DISTINCT r.titre
+        FROM recette r
+        INNER JOIN ingredient i ON r.titre = i.nom_recette
+        WHERE i.nom_ingredient = '" . $ingredient . "' and r.titre not in(SELECT DISTINCT nom_recette
+            FROM photo)";
+
+    }else{
         $requete = "SELECT DISTINCT r.titre
         FROM recette r
         INNER JOIN ingredient i ON r.titre = i.nom_recette
         WHERE i.nom_ingredient = '" . $ingredient . "'";
-
+    }
         // Exécuter la requête
         $resultat = mysqli_query($mysqli, $requete);
 
@@ -47,13 +69,32 @@ function recettesFromIngredient($ingredient) {
 
 }
 
-function allRecettes() {
+function allRecettes($triAlp,$photo) {
     global $mysqli; // Utilisation de la connexion MySQLi globale
+    $requete=null;
 
 
-    // Requête pour récupérer les titres des recettes contenant l'ingrédient
-    $requete = "SELECT DISTINCT r.titre
-        FROM recette r";
+    if($triAlp==-1){
+            $requete = "SELECT DISTINCT r.titre
+            FROM recette r
+            ORDER BY r.titre DESC";
+    }else if($photo==1){
+            $requete = "SELECT DISTINCT r.titre
+            FROM recette r
+            where r.titre in(SELECT DISTINCT nom_recette
+            FROM photo)";
+    }else if($photo==-1){
+            $requete = "SELECT DISTINCT r.titre
+            FROM recette r
+            where r.titre not in(SELECT DISTINCT nom_recette
+            FROM photo)";
+
+    }else{
+        $requete = "SELECT DISTINCT r.titre
+            FROM recette r
+            ORDER BY r.titre ASC";
+    }
+
 
     // Exécuter la requête
     $resultat = mysqli_query($mysqli, $requete);
@@ -282,14 +323,33 @@ function recettesFromFavori($nom_utilisateur) {
 
     return $titres;
 }
-function rechercherRecette($nomRecette) {
+function rechercherRecette($nomRecette,$triAlp,$photo) {
     global $mysqli;
+    $requete=null;
 
-    // Requête pour récupérer les titres des recettes contenant l'ingrédient
-    $requete = "SELECT DISTINCT r.titre
-        FROM recette r
-        where upper(r.titre) like upper('%" . $mysqli->real_escape_string($nomRecette) . "%')";
+        if($triAlp==-1){
+            echo 'ouyi';
+            $requete = "SELECT DISTINCT r.titre
+            FROM recette r
+            where upper(r.titre) like upper('%" . $mysqli->real_escape_string($nomRecette) . "%')
+            ORDER BY r.titre DESC";
 
+        }else if($photo==1){
+            $requete = "SELECT DISTINCT nom_recette
+            FROM photo
+            where upper(r.titre) like upper('%" . $mysqli->real_escape_string($nomRecette) . "%')";
+        }else if($photo==-1){
+            $requete = "SELECT DISTINCT r.titre
+            FROM recette r
+            where upper(r.titre) like upper('%" . $mysqli->real_escape_string($nomRecette) . "%') and r.titre not in(SELECT DISTINCT nom_recette
+            FROM photo)";
+
+        }else {
+        $requete = "SELECT DISTINCT r.titre
+            FROM recette r
+            where upper(r.titre) like upper('%" . $mysqli->real_escape_string($nomRecette) . "%')
+            ORDER BY r.titre ASC";
+    }
     // Exécuter la requête
     $resultat = mysqli_query($mysqli, $requete);
 
