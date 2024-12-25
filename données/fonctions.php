@@ -61,7 +61,7 @@ function recettesFromIngredient($ingredient,$triAlp,$photo) {
     if(!empty($souscategs)) {
 
         foreach ($souscategs as $souscateg) {
-            $titres=array_merge($titres,recettesFromIngredient($souscateg));
+            $titres=array_merge($titres,recettesFromIngredient($souscateg,$triAlp,$photo));
         }
     }
     $titres = array_unique($titres);
