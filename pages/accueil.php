@@ -82,14 +82,6 @@
         // Mise à jour de la recherche si la valeur a changé
         if (isset($_POST['search']) && $_POST['search'] !== $_SESSION['search']) {
             $_SESSION['search'] = htmlspecialchars($_POST['search']);
-            $_POST['filter']='A-Z';
-        }
-
-        // Mise à jour du filtre si la valeur a changé
-        if (isset($_POST['filter']) && $_POST['filter'] !== $_SESSION['filter']) {
-            $_SESSION['filter'] = htmlspecialchars($_POST['filter']);
-        }else{
-            $_SESSION['filter'] = $_POST['filter'];
         }
     }
     // Vérification et traitement des données envoyées par le formulaire
