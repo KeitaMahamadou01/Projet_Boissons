@@ -4,6 +4,24 @@
     gap: 20px;
 }
 
+.nav_aliments ol {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+.aliment {
+    font-size: 1rem;
+    display: inline-block;
+}
+
+.aliment a::after {
+    color: #000;
+    content: '>';
+    font-size: 80%;
+    font-weight: bold;
+    padding: 0 3px;
+}
+
 .recettes-container {
     flex-grow: 1;
 }
@@ -28,11 +46,11 @@
 }
 
 .select {
-    width: 200px; /* Définissez une largeur fixe */
-    height: 230px; /* Définissez une hauteur fixe */
-    overflow: auto; /* Ajoutez un défilement si le contenu dépasse */
-    box-sizing: border-box; /* Inclut les bordures dans la largeur/hauteur */
-    font-size: 14px; /* Taille de police constante */
+    width: 200px;
+    height: 230px;
+    overflow: auto;
+    box-sizing: border-box;
+    font-size: 14px;
 }
 
 .favori {

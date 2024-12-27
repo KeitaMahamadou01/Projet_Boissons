@@ -54,13 +54,15 @@
         if(count($_SESSION['chemin']) > 1 && $_POST['Aliments'] == 'retour'){
             array_pop($_SESSION['chemin']);
         }
-        $s = $_SESSION['chemin'][0];
-        echo "<a href='accueil.php?ing=$s'>" . $s . "</a>";
+        $s = end($_SESSION['chemin']);
+        echo "<nav class='nav_aliments'><ol>";
         foreach($_SESSION['chemin'] as $value){
-            if($value != $_SESSION['chemin'][0]){
-                echo " -> <a href='accueil.php?ing=$value'>" . $value . "</a>";
+            if($value != $s){
+                echo "<li class='aliment'><a href='accueil.php?ing=$value'>$value</a></li>";
             }
         }
+        echo "<li class='aliment'>$value</li>";
+        echo "</ol></nav>";
         $ingredient = $_SESSION['chemin'][count($_SESSION['chemin']) - 1];
     ?>
     <div class='container'>
