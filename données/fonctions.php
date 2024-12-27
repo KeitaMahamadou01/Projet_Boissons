@@ -252,7 +252,7 @@ function authentification($nom_utilisateur,$mot_de_passe){
 function ajouterUtilisateur($nom,$prenom,$nom_utilisateur,$mot_de_passe,$email,$num_telephone,$adresse,$code_postale,$ville,$dateNaissance,$sexe){
     global $mysqli;
     $hashed_password = password_hash($mot_de_passe, PASSWORD_BCRYPT);
-    $SqladdUser="INSERT INTO authentification VALUES('".$mysqli->real_escape_string($nom).
+    $sqlAddUser="INSERT INTO authentification VALUES('".$mysqli->real_escape_string($nom).
                                                     "','".$mysqli->real_escape_string($prenom).
                                                     "','".$mysqli->real_escape_string($nom_utilisateur).
                                                     "','".$mysqli->real_escape_string($hashed_password).
@@ -263,7 +263,7 @@ function ajouterUtilisateur($nom,$prenom,$nom_utilisateur,$mot_de_passe,$email,$
                                                     "','". $mysqli->real_escape_string($ville) .
                                                     "','".$mysqli->real_escape_string($dateNaissance).
                                                     "','". $mysqli->real_escape_string($sexe) . "')";
-    if($mysqli->query($SqladdUser)){
+    if($mysqli->query($sqlAddUser)){
         return true;
     }
     return false;
@@ -281,10 +281,10 @@ function nomUtilisateurExist($nom_utilisateur){
 
 function ajouterFavori($nomRecette,$nom_utilisateur){
     global $mysqli;
-    $SqladdFav="INSERT INTO panier (utilisateur_id, nom_recette) VALUES('".$mysqli->real_escape_string($nom_utilisateur).
+    $sqlAddFav="INSERT INTO panier (utilisateur_id, nom_recette) VALUES('".$mysqli->real_escape_string($nom_utilisateur).
                                             "','".$mysqli->real_escape_string($nomRecette). "')";
     
-    if($mysqli->query($SqladdFav)){
+    if($mysqli->query($sqlAddFav)){
         return true;
     }
     return false;
@@ -379,6 +379,49 @@ function rechercherRecette($nomRecette,$triAlp,$photo) {
     mysqli_free_result($resultat);
 
     return $titres;
+}
+
+function donneesUtilisateur($username){
+    global $mysqli;
+    $sqlDonnesUser = "SELECT nom, prenom, adresse_mail, num_telephone, adresse, code_postale, ville, dateNaissance, sexe
+                      FROM authentification WHERE nom_utilisateur='" . $mysqli->real_escape_string($username) . "'";
+    $resultat = $mysqli->query($sqlDonnesUser);
+    if ($resultat) {
+        if($ligne = mysqli_fetch_assoc($resultat)) {
+            $donnees = array( 'nom' => $ligne['nom'],
+                              'prenom' => $ligne['prenom'],
+                              'adresse_mail' => $ligne['adresse_mail'],
+                              'num_telephone' => $ligne['num_telephone'],
+                              'adresse' => $ligne['adresse'],
+                              'code_postal' => $ligne['code_postale'],
+                              'ville' => $ligne['ville'],
+                              'dateNaissance' => $ligne['dateNaissance'],
+                              'sexe' => $ligne['sexe'],
+            );
+        }
+        return $donnees;
+    }else{
+        echo "Erreur SQL : " . mysqli_error($mysqli) . "<br>";
+        return [];
+    }
+}
+
+function modifDonneesUtilisateur($username,$donnees){
+    global $mysqli;
+    $sqlModifUser = "UPDATE authentification SET nom = '" .$mysqli->real_escape_string($donnees['nom']).
+                                                 "', prenom = '".$mysqli->real_escape_string($donnees['prenom']).
+                                                 "', adresse_mail = '".$mysqli->real_escape_string($donnees['adresse_mail']).
+                                                 "', num_telephone = '".$mysqli->real_escape_string($donnees['num_telephone']).
+                                                 "', adresse = '".$mysqli->real_escape_string($donnees['adresse']).
+                                                 "', code_postale = '".$mysqli->real_escape_string($donnees['code_postal']).
+                                                 "', ville = '".$mysqli->real_escape_string($donnees['ville']).
+                                                 "', dateNaissance = '".$mysqli->real_escape_string($donnees['dateNaissance']).
+                                                 "', sexe = '".$mysqli->real_escape_string($donnees['sexe'])."'
+                     WHERE nom_utilisateur='" . $mysqli->real_escape_string($username) . "'";
+    if($mysqli->query($sqlModifUser)){
+        return true;
+    }
+    return false;
 }
 
 ?>

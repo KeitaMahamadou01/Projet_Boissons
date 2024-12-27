@@ -26,7 +26,6 @@
     flex-grow: 1;
 }
 
-
 .select {
     width: 200px;
     height: 230px;
@@ -35,9 +34,6 @@
     font-size: 14px;
 }
 
-.favori {
-    border-color: red;
-}
 .search-container {
     display: flex;
     justify-content: space-between;

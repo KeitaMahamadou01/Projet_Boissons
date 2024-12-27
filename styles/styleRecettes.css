@@ -16,3 +16,7 @@
     width: 100%;
     border-radius: 15px;
 }
+
+.favori {
+    border-color: red;
+}
