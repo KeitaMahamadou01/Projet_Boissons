@@ -3,7 +3,6 @@
 <head>
 	<meta charset="utf-8" />
     <link href="../styles/styleHeader.css" rel="stylesheet">
-    <link href="../styles/style.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="../javascript/script.js"></script>
 </head>

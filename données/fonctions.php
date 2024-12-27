@@ -233,19 +233,29 @@ function panier($mysqli,$nom_utilisateur)
 }
 function authentification($nom_utilisateur,$mot_de_passe){
     global $mysqli;
-    $sqlAuthent="SELECT * FROM authentification WHERE nom_utilisateur='" . $mysqli->real_escape_string($nom_utilisateur) . "' and mot_de_passe='" . $mysqli->real_escape_string($mot_de_passe) . "'";
+    $sqlAuthent="SELECT mot_de_passe FROM authentification WHERE nom_utilisateur='" . $mysqli->real_escape_string($nom_utilisateur) . "'";
     $auth = $mysqli->query($sqlAuthent);
-    if ($auth->num_rows > 0) {
+    if ($auth) {
+        if($ligne = mysqli_fetch_assoc($auth)) {
+            $hashed_password = $ligne['mot_de_passe'];
+        }
+    }else{
+        echo "Erreur SQL : " . mysqli_error($mysqli) . "<br>";
+        return false;
+    }
+
+    if (password_verify($mot_de_passe,$hashed_password)) {
         return true;
     }
     return false;
 }
 function ajouterUtilisateur($nom,$prenom,$nom_utilisateur,$mot_de_passe,$email,$num_telephone,$adresse,$code_postale,$ville,$dateNaissance,$sexe){
     global $mysqli;
+    $hashed_password = password_hash($mot_de_passe, PASSWORD_BCRYPT);
     $SqladdUser="INSERT INTO authentification VALUES('".$mysqli->real_escape_string($nom).
                                                     "','".$mysqli->real_escape_string($prenom).
                                                     "','".$mysqli->real_escape_string($nom_utilisateur).
-                                                    "','".$mysqli->real_escape_string($mot_de_passe).
+                                                    "','".$mysqli->real_escape_string($hashed_password).
                                                     "','".$mysqli->real_escape_string($email).
                                                     "','".$mysqli->real_escape_string($num_telephone).
                                                     "','". $mysqli->real_escape_string($adresse) .

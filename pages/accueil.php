@@ -3,6 +3,7 @@
 
 <head>
     <title>Boissons</title>
+    <link href="../styles/styleAccueil.css" rel="stylesheet">
     <?php require("../données/header.php")?>
 </head>
 
@@ -31,13 +32,19 @@
     </div>
     <br>
     <?php
-        if(!isset($_SESSION['chemin']) || count($_SESSION['chemin']) == 0){
+        //initialisation d'une liste d'aliments sélectionnés au début d'une session
+        if(!isset($_SESSION['chemin'])){
             $_SESSION['chemin'] = [];
             $_SESSION['chemin'][] = "Aliment";
         }
+
+        //ajout de l'élément sélectionné dans le select à liste d'aliments grâce à la méthode POST
         if(isset($_POST['Aliments']) && $_POST['Aliments'] != 'retour' && $_SESSION['chemin'][count($_SESSION['chemin']) - 1] != $_POST['Aliments']){
             $_SESSION['chemin'][] = $_POST['Aliments'];
         }
+
+        //si on a cliqué sur un lien de la navigation aliment qui est dans $_GET['ing']
+        //on supprime tous les éléments dans la liste d'aliments après celui-ci
         if(isset($_GET['ing'])){
             $b = false;
             foreach($_SESSION['chemin'] as $value){
@@ -51,9 +58,13 @@
             }
             header("Location: accueil.php");
         }
+
+        //si on a sélectionné retour dans le select on supprime le dernier élément de la liste d'aliments
         if(count($_SESSION['chemin']) > 1 && $_POST['Aliments'] == 'retour'){
             array_pop($_SESSION['chemin']);
         }
+
+        //création de la nav-bar du chemin des aliments sélectionnés
         $s = end($_SESSION['chemin']);
         echo "<nav class='nav_aliments'><ol>";
         foreach($_SESSION['chemin'] as $value){
@@ -63,6 +74,7 @@
         }
         echo "<li class='aliment'>$value</li>";
         echo "</ol></nav>";
+
         $ingredient = $_SESSION['chemin'][count($_SESSION['chemin']) - 1];
     ?>
     <div class='container'>
@@ -105,10 +117,9 @@
 
     }
 
-
-
-        // Vous pouvez ajouter ici un traitement de la recherche
-        // Par exemple, rechercher une recette dans une base de données
+    //On affiche les aliments par rapport à la recherche effectué
+    //sinon on affiche les aliments par rapport au dernier choisi
+    //On prends aussi en compte le filtre
     if (!empty($search)) {
             echo "<strong>Vous avez recherché : $search</strong>";
             $recettes = rechercherRecette($search,$triAlp,$photo);
@@ -118,6 +129,7 @@
                 echo "<strong>Aucune recette ne correspond à votre recherche.</strong>";
             }
     }else{
+        //On affiche tout les aliments si la navigation contient seulement 'Aliment'
         if ($ingredient == 'Aliment') {
             $recettes = allRecettes($triAlp,$photo);
             if (!empty($recettes)) {
