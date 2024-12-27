@@ -4,6 +4,7 @@
 <head>
     <title>Boissons</title>
     <link href="../styles/styleAccueil.css" rel="stylesheet">
+    <link href="../styles/styleRecettes.css" rel="stylesheet">
     <?php require("../données/header.php")?>
 </head>
 
