@@ -6,7 +6,7 @@ function actionFavori(nomRecette,nomUtilisateur,etatFavori) {
         data: {recette: nomRecette, utilisateur: nomUtilisateur, etat: etatFavori},
         success: function(response){
             if(response.success){
-                window.location.reload();
+                window.location=window.location;
             }
         }
     })

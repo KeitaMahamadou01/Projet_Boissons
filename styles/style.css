@@ -1,44 +1,11 @@
-h1 {
-    text-align: center;
-}
-
-.en_tete{
-    text-align: center;
-}
-
-.connexion {
-    float:right;
-    border: 0;
-    padding: 5px 20px;
-    font-size: 1rem;
-    color: white;
-    border-radius: 10px;
-    background-color: black;
-}
-
-.connexion:hover {
-    background-color: rgb(50,50,50);
-}
-
-.connexion:active { 
-    box-shadow:
-      inset -2px -2px 3px rgba(255, 255, 255, 0.6),
-      inset 2px 2px 3px rgba(0, 0, 0, 0.6);
-  }
-
 .container {
-    display: flex; /* Dispose les enfants horizontalement */
-    align-items: flex-start; /* Aligne les enfants en haut */
-    gap: 20px; /* Espace entre le <select> et les recettes */
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
 }
 
 .recettes-container {
-    flex-grow: 1; /* Prend tout l'espace disponible */
-}
-
-.recettes-container strong {
-    display: block; /* S'assure que le texte occupe toute la largeur */
-    margin-bottom: 10px; /* Ajoute un espace entre le titre et les recettes */
+    flex-grow: 1;
 }
 
 .recettes {
