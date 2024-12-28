@@ -15,13 +15,6 @@
             passwordField.type = type;
             this.textContent = type === 'password' ? '👁️' : '🙈';
         });
-
-        document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
-            const confirmPasswordField = document.getElementById('confirm_password');
-            const type = confirmPasswordField.type === 'password' ? 'text' : 'password';
-            confirmPasswordField.type = type;
-            this.textContent = type === 'password' ? '👁️' : '🙈';
-        });
     });
 </script>
 <div class="container">
@@ -73,7 +66,7 @@
         <label for="password">Mot de passe :</label><br>
         <div class="password-container">
             <input type="password" id="password" name="password" required><br>
-            <button type="button" id="toggleConfirmPassword" aria-label="Afficher/masquer le mot de passe">👁️</button>
+            <button type="button" id="togglePassword" aria-label="Afficher/masquer le mot de passe">👁️</button>
         </div>
 
         <button type="submit">Se connecter</button>

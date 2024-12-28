@@ -22,7 +22,7 @@ body {
 
 h2 {
     text-align: center;
-    color: #4CAF50;
+    color: black;
     margin-bottom: 30px;
 }
 
@@ -52,7 +52,7 @@ input[type="radio"] {
 button {
     width: 100%;
     padding: 14px;
-    background-color: #4CAF50;
+    background-color: black;
     color: white;
     border: none;
     border-radius: 5px;
@@ -62,7 +62,7 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: rgb(58, 56, 56);
 }
 
 .error-message {
@@ -73,7 +73,7 @@ button:hover {
 }
 
 .success-message {
-    color: green;
+    color: black;
     text-align: center;
     font-size: 16px;
     margin-top: 10px;
@@ -84,7 +84,7 @@ p {
 }
 
 p a {
-    color: #4CAF50;
+    color: black;
     text-decoration: none;
     font-weight: bold;
 }
@@ -101,18 +101,18 @@ p a:hover {
     flex: 1;
 }
 .password-container input {
-    width: 100%; /* Occupe toute la largeur de son conteneur */
-    padding: 10px; /* Ajoute de l'espace interne */
-    font-size: 16px; /* Taille de la police */
-    border: 1px solid #ccc; /* Bordure */
-    border-radius: 5px; /* Coins arrondis */
-    box-sizing: border-box; /* Inclut le padding et la bordure dans la largeur */
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
 .password-container {
     display: flex;
     align-items: center;
-    gap: 10px; /* Ajoute un espace entre le champ et le bouton */
+    gap: 10px;
 }
 
 .password-container button {

@@ -122,7 +122,7 @@ function infoRecette($titre){
     global $mysqli;
 
     // Afficher le titre
-    echo "<p><strong>" . htmlspecialchars($titre) . "</strong></p>";
+    echo "<h3><strong>" . htmlspecialchars($titre) . "</strong></h3>";
 
     // Afficher l'image si elle existe
     $sqlTitre = "SELECT * FROM photo WHERE nom_recette = '" . $mysqli->real_escape_string($titre) . "'";
@@ -135,8 +135,10 @@ function infoRecette($titre){
         echo "<p><img src='" . htmlspecialchars('image.jpg') . "' alt='" . htmlspecialchars($titre) . "' style='max-width: 300px;'></p>";
     }
 
+    echo "<div class='details'>";
+
     // Afficher les ingrédients
-    /*$sqlIngredient = "SELECT * FROM ingredient WHERE nom_recette = '" . $mysqli->real_escape_string($titre) . "'";
+    $sqlIngredient = "SELECT * FROM ingredient WHERE nom_recette = '" . $mysqli->real_escape_string($titre) . "'";
     $ingredient = $mysqli->query($sqlIngredient);
 
     if ($ingredient->num_rows > 0) {
@@ -158,8 +160,9 @@ function infoRecette($titre){
         while($p = $preparation->fetch_assoc()){
             echo "<p><strong>Préparation :</strong>" . htmlspecialchars($p['preparation']) . "</p>";
         }
-    }*/
+    }
 
+    echo "</div>";
 }
 
 function affichageRecettes($recettes){

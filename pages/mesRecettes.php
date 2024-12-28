@@ -15,22 +15,22 @@
         $recettes = $_SESSION['favorisVisiteur'];
         if (!empty($_SESSION['favorisVisiteur'])){
             echo "<br>";
-            echo "<strong>Recettes Favories:<br></strong>";
+            echo "<strong>Recettes Favorites:<br></strong>";
             echo "<br>";
             affichageRecettes($recettes);
         }else{
-            echo "<strong>Aucune Recettes Favories</strong>";
+            echo "<strong>Aucune Recettes Favorites</strong>";
         }
     }else{
         $username = $_SESSION['username'];
         $recettes = recettesFromFavori($username);
         if (!empty($recettes)){
             echo "<br>";
-            echo "<strong>Recettes Favories:<br></strong>";
+            echo "<strong>Recettes Favorites:<br></strong>";
             echo "<br>";
             affichageRecettes($recettes);
         }else{
-            echo "<strong>Aucune Recettes Favories</strong>";
+            echo "<strong>Aucune Recettes Favorites</strong>";
         }
     }
 ?>

@@ -10,13 +10,62 @@
     padding: 10px;
     width: 200px;
     text-align: center;
+    height: 300px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.recette h3 {
+    font-size: 16px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
 
 .recette img {
     width: 100%;
+    height: 200px;
     border-radius: 15px;
+    object-fit: contain;
+}
+
+.recette:hover {
+    width: 300px;
+    height: auto;
+}
+
+.recette:hover h3 {
+    -webkit-line-clamp: unset;
+    max-height: none;
+}
+
+.recette.adroite {
+    width: 200px;
+    height: auto;
+}
+
+.details {
+    display: none;
+    text-align: left;
+    margin-top: 10px;
+}
+
+.recette:hover .details {
+    display: block;
 }
 
 .favori {
     border-color: red;
+}
+
+.favori img{
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+}
+
+.nonfavori img{
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
 }
