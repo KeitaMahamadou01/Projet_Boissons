@@ -4,10 +4,11 @@
 <head>
     <title>Utilisateur</title>
     <?php include("../données/header.php"); ?>
+    <link href="../styles/styleUtilisateur.css" rel="stylesheet">
 </head>
 <body>
     <br>
-    Vos informations :
+    <h2>Vos informations :</h2>
     
     <?php
         require("../données/fonctions.php");
@@ -39,7 +40,7 @@
 
             
             if(modifDonneesUtilisateur($user,$donnees)){
-                echo "<br>Informations sauvegardées";
+                echo "<br><h3>Informations sauvegardées</h3><br>";
             }
         }
     

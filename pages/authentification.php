@@ -5,18 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Authentification</title>
     <link rel="stylesheet" href="../styles/styleAuthentification.css">
+    <script src="../javascript/scriptMDP.js"></script>
 </head>
 <body>
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('togglePassword').addEventListener('click', function () {
-            const passwordField = document.getElementById('password');
-            const type = passwordField.type === 'password' ? 'text' : 'password';
-            passwordField.type = type;
-            this.textContent = type === 'password' ? '👁️' : '🙈';
-        });
-    });
-</script>
 <div class="container">
     <h2>Authentification</h2>
 
@@ -44,7 +35,7 @@
                 // Authentification réussie
                 session_start();
                 $_SESSION['username'] = $username;
-                header('Location: accueil.php');
+                header('Location: boissons.php');
                 exit();
             }
         }

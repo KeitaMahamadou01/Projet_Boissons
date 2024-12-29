@@ -3,7 +3,7 @@
 
 <head>
     <title>Boissons</title>
-    <link href="../styles/styleAccueil.css" rel="stylesheet">
+    <link href="../styles/styleBoissons.css" rel="stylesheet">
     <link href="../styles/styleRecettes.css" rel="stylesheet">
     <?php require("../données/header.php")?>
 
@@ -40,6 +40,10 @@
             $_SESSION['chemin'][] = "Aliment";
         }
 
+        if(!isset($_SESSION['favorisVisiteur'])){
+            $_SESSION['favorisVisiteur'] = [];
+        }
+
         //ajout de l'élément sélectionné dans le select à liste d'aliments grâce à la méthode POST
         if(isset($_POST['Aliments']) && $_POST['Aliments'] != 'retour' && $_SESSION['chemin'][count($_SESSION['chemin']) - 1] != $_POST['Aliments']){
             $_SESSION['chemin'][] = $_POST['Aliments'];
@@ -58,7 +62,7 @@
                     }
                 }
             }
-            header("Location: accueil.php");
+            header("Location: boissons.php");
         }
 
         //si on a sélectionné retour dans le select on supprime le dernier élément de la liste d'aliments
@@ -71,7 +75,7 @@
         echo "<nav class='nav_aliments'><ol>";
         foreach($_SESSION['chemin'] as $value){
             if($value != $s){
-                echo "<li class='aliment'><a href='accueil.php?ing=$value'>$value</a></li>";
+                echo "<li class='aliment'><a href='boissons.php?ing=$value'>$value</a></li>";
             }
         }
         echo "<li class='aliment'>$value</li>";

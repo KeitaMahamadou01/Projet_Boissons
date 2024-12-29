@@ -132,7 +132,7 @@ function infoRecette($titre){
             echo "<p><img src='" . htmlspecialchars($photo1["chemin_photo"]) . "' alt='" . htmlspecialchars($titre) . "' style='max-width: 300px;'></p>";
         }
     }else{
-        echo "<p><img src='" . htmlspecialchars('image.jpg') . "' alt='" . htmlspecialchars($titre) . "' style='max-width: 300px;'></p>";
+        echo "<p><img src='" . htmlspecialchars('../données/Images/default.jpg') . "' alt='" . htmlspecialchars($titre) . "' style='max-width: 300px;'></p>";
     }
 
     echo "<div class='details'>";
@@ -175,17 +175,17 @@ function affichageRecettes($recettes){
             $username = $_SESSION['username'];
             $user = htmlspecialchars(json_encode($username), ENT_QUOTES, 'UTF-8');
             if(!estFavori($recette,$username)){
-                echo "<button class='nonfavori' onClick='actionFavori($recetteJson,$user,true)'><img src='../données/heart-fill.svg' alt='favori'/></button>";
+                echo "<button class='nonfavori' onClick='actionFavori($recetteJson,$user,true)'><img src='../données/Images/heart-fill.svg' alt='favori'/></button>";
             }else{
-                echo "<button class='favori' onClick='actionFavori($recetteJson,$user,false)'><img src='../données/heart-fill.svg' alt='favori'/></button>";
+                echo "<button class='favori' onClick='actionFavori($recetteJson,$user,false)'><img src='../données/Images/heart-fill.svg' alt='favori'/></button>";
             }
         }else{
             $username = "visiteur";
             $user = htmlspecialchars(json_encode($username), ENT_QUOTES, 'UTF-8');
             if(isset($_SESSION['favorisVisiteur']) && !in_array($recette,$_SESSION['favorisVisiteur'])){
-                echo "<button class='nonfavori' onClick='actionFavori($recetteJson,$user,true)'><img src='../données/heart-fill.svg' alt='favori'/></button>";
+                echo "<button class='nonfavori' onClick='actionFavori($recetteJson,$user,true)'><img src='../données/Images/heart-fill.svg' alt='favori'/></button>";
             }else{
-                echo "<button class='favori' onClick='actionFavori($recetteJson,$user,false)'><img src='../données/heart-fill.svg' alt='favori'/></button>";
+                echo "<button class='favori' onClick='actionFavori($recetteJson,$user,false)'><img src='../données/Images/heart-fill.svg' alt='favori'/></button>";
             }
         }
         infoRecette($recette);

@@ -4,17 +4,17 @@
 	<meta charset="utf-8" />
     <link href="../styles/styleHeader.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="../javascript/script.js"></script>
+    <script src="../javascript/scriptRecette.js"></script>
 </head>
 <body>
     <div class="titre">
         <br>
-        <h1>Recettes</h1>
+        <h1>Boissons</h1>
         <br>
     </div>
     <nav class="entete">
         <ul class="pages">
-            <li><a href="accueil.php" title="Retour à l'accueil">Accueil</a></li>
+            <li><a href="boissons.php" title="Voir les boissons">Boissons</a></li>
             <li><a href="mesRecettes.php" title="Voir mes recettes préférées">Mes Recettes Préférées</a></li>
         </ul>
         <div class="bouttons">

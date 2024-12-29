@@ -13,9 +13,6 @@ if($utilisateur != "visiteur"){
         $result = enleverFavori($recette, $utilisateur);
     }
 }else{
-    if(!isset($_SESSION['favorisVisiteur'])){
-        $_SESSION['favorisVisiteur'] = [];
-    }
     if ($etat) {
         $_SESSION['favorisVisiteur'][] = $recette;
     } else {
