@@ -1,1 +1,1 @@
-<?php header('Location: pages/boissons.php'); ?>
+<?php header('Location: pages/boissons.php');exit; ?>

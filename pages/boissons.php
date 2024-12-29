@@ -40,6 +40,7 @@
             $_SESSION['chemin'][] = "Aliment";
         }
 
+        //initialisation de la liste de favoris pour un utilisateur non connecté
         if(!isset($_SESSION['favorisVisiteur'])){
             $_SESSION['favorisVisiteur'] = [];
         }
@@ -63,6 +64,7 @@
                 }
             }
             header("Location: boissons.php");
+            exit;
         }
 
         //si on a sélectionné retour dans le select on supprime le dernier élément de la liste d'aliments
