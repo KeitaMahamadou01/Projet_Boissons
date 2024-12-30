@@ -137,17 +137,27 @@ function infoRecette($titre){
 
     echo "<div class='details'>";
 
-    // Afficher les ingrédients
+    // Afficher les ingrédients et les quantités
     $sqlIngredient = "SELECT * FROM ingredient WHERE nom_recette = '" . $mysqli->real_escape_string($titre) . "'";
     $ingredient = $mysqli->query($sqlIngredient);
 
     if ($ingredient->num_rows > 0) {
-        echo "<p><strong>Ingrédients :</strong>";
+        //récupération des ingrédients et des quantités
         $ingredientsList = [];
+        $quantite = [];
         while ($ingredient1 = $ingredient->fetch_assoc()) {
             $ingredientsList[] = htmlspecialchars($ingredient1['nom_ingredient']);
+            $quantite[] = htmlspecialchars($ingredient1['quantite']);
         }
-        echo implode("<br>", $ingredientsList);
+        //affichage des ingrédients
+        echo "<p><strong>Ingrédients :</strong>";
+        echo "<br>";
+        echo implode("<br>",$ingredientsList);
+        echo "</p>";
+        //affichage des quanntités
+        echo "<p><strong>Quantité :</strong>";
+        echo "<br>";
+        echo implode("<br>",$quantite);
         echo "</p>";
     } else {
         echo "<p>Aucun ingrédient trouvé</p>";
@@ -158,7 +168,7 @@ function infoRecette($titre){
     $preparation = $mysqli->query($sqlPreparation);
     if($preparation->num_rows > 0){
         while($p = $preparation->fetch_assoc()){
-            echo "<p><strong>Préparation :</strong>" . htmlspecialchars($p['preparation']) . "</p>";
+            echo "<p><strong>Préparation :</strong>" . "<br>" . htmlspecialchars($p['preparation']) . "</p>";
         }
     }
 
